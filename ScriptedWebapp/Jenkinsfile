@@ -1,22 +1,18 @@
 node {
-    // Manually set Maven and JDK paths using 'tool'
     def mvnHome = tool name: 'Maven_3.8.6', type: 'maven'
     def jdkHome = tool name: 'JDK_17', type: 'jdk'
-    
-    // Set environment variables
+
     env.PATH = "${jdkHome}\\bin;${mvnHome}\\bin;${env.PATH}"
     env.CATALINA_HOME = 'D:\\DevopsTaining\\All softwares\\apache-tomcat-9.0.104\\apache-tomcat-9.0.104'
 
     stage('Build WAR') {
-            bat 'mvn clean package'
+        bat 'mvn clean package'
     }
 
     stage('Deploy WAR Manually') {
-        dir('ScriptedWebapp') {
-            bat 'echo Current directory: %CD%'
-            bat 'dir target'
-            bat 'if exist "%CATALINA_HOME%\\webapps\\" (echo Path exists) else (echo Path does NOT exist)'
-            bat 'copy target\\ScriptedWebapp.war "%CATALINA_HOME%\\webapps\\"'
-        }
+        bat 'echo Current directory: %CD%'
+        bat 'dir target'
+        bat 'if exist "%CATALINA_HOME%\\webapps\\" (echo Path exists) else (echo Path does NOT exist)'
+        bat 'copy target\\ScriptedWebapp.war "%CATALINA_HOME%\\webapps\\"'
     }
 }
