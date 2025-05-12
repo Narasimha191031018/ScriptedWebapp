@@ -1,11 +1,10 @@
 node {
-    // Set tools
-    tools {
-        maven 'Maven_3.8.6'
-        jdk 'JDK_17'
-    }
-
-    // Set environment variable
+    // Manually set Maven and JDK paths using 'tool'
+    def mvnHome = tool name: 'Maven_3.8.6', type: 'maven'
+    def jdkHome = tool name: 'JDK_17', type: 'jdk'
+    
+    // Set environment variables
+    env.PATH = "${jdkHome}\\bin;${mvnHome}\\bin;${env.PATH}"
     env.CATALINA_HOME = 'D:\\DevopsTaining\\All softwares\\apache-tomcat-9.0.104\\apache-tomcat-9.0.104'
 
     stage('Build WAR') {
@@ -23,4 +22,3 @@ node {
         }
     }
 }
-
