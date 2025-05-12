@@ -6,13 +6,17 @@ node {
     env.CATALINA_HOME = 'D:\\DevopsTaining\\All softwares\\apache-tomcat-9.0.104\\apache-tomcat-9.0.104'
 
     stage('Build WAR') {
-        bat 'mvn clean package'
+        dir('ScriptedWebapp') {
+            bat 'mvn clean package'
+        }
     }
 
     stage('Deploy WAR Manually') {
-        bat 'echo Current directory: %CD%'
-        bat 'dir target'
-        bat 'if exist "%CATALINA_HOME%\\webapps\\" (echo Path exists) else (echo Path does NOT exist)'
-        bat 'copy target\\ScriptedWebapp.war "%CATALINA_HOME%\\webapps\\"'
+        dir('ScriptedWebapp') {
+            bat 'echo Current directory: %CD%'
+            bat 'dir target'
+            bat 'if exist "%CATALINA_HOME%\\webapps\\" (echo Path exists) else (echo Path does NOT exist)'
+            bat 'copy target\\ScriptedWebapp.war "%CATALINA_HOME%\\webapps\\"'
+        }
     }
 }
